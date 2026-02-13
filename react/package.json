@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "test": "vtex-test-tools test"
+  },
+  "devDependencies": {
+    "@apollo/react-testing": "^3.1.3",
+    "@types/graphql": "^14.5.0",
+    "@types/jest": "^25.1.5",
+    "@types/node": "^13.11.0",
+    "@types/react": "^16.9.31",
+    "@types/react-intl": "^3.0.0",
+    "@vtex/test-tools": "^3.1.0",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "empathymx.empathy-pixel-app": "https://dev--empathymx.myvtex.com/_v/private/typings/linked/v1/empathymx.empathy-pixel-app@0.0.1+build1764345759/public/@types/empathymx.empathy-pixel-app",
+    "graphql": "^14.5.4",
+    "react-intl": "^3.11.0",
+    "typescript": "3.9.7",
+    "vtex.pixel-interfaces": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.pixel-interfaces@1.1.1/public/_types/react",
+    "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.136.1/public/@types/vtex.render-runtime"
+  }
+}
