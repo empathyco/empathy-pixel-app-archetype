@@ -1,6 +1,6 @@
 # Empathy Pixel App for VTEX
 
-**Template de integración** desarrollado para implementar la experiencia de busqueda **Empathy** en tiendas VTEX. Esta aplicación inyecta un widget de búsqueda avanzada mediante VTEX Pixel, siguiendo las prácticas recomendadas por VTEX.
+**Template de integración** desarrollado para implementar la experiencia de búsqueda **Empathy** en tiendas VTEX. Esta aplicación inyecta un widget de búsqueda avanzada mediante VTEX Pixel, siguiendo las prácticas recomendadas por VTEX.
 
 ---
 
@@ -62,7 +62,16 @@ Asegúrate de estar logueado en la cuenta objetivo:
 
 ### Pasos
 
-1. Clona o realiza un Fork de este repositorio:
+1. **Opción A - Hacer fork del repositorio (recomendado):**
+   
+   1. Haz fork del repositorio desde GitHub: https://github.com/empathyco/empathy-pixel-app-archetype/fork
+   2. Clona tu fork:
+   ```bash
+   git clone https://github.com/TU_USUARIO/empathy-pixel-app-archetype
+   cd empathy-pixel-app-archetype
+   ```
+
+   **Opción B - Clonar repositorio:**
    ```bash
    git clone https://github.com/empathyco/empathy-pixel-app-archetype
    cd empathy-pixel-app-archetype
@@ -93,7 +102,7 @@ Configura el Vendor (Account Name): Abre el archivo manifest.json en la raíz de
 {
 "name": "empathy-pixel-app",
 "vendor": "TU_ACCOUNT_NAME",
-"version": "0.0.x",
+"version": "0.0.x"
 }
 ```
 
@@ -131,7 +140,7 @@ Ejemplo:
 
 ### 4. Agregar Componentes a la Store
 
-En tu theme, agrega los siguientes bloques para renderizar el cajón de búsqueda y los resultados. Añadelo en todas las templates donde quieras que aparezca el buscador (home, categoría, producto, etc.):
+En tu theme, agrega los siguientes bloques para renderizar el cajón de búsqueda y los resultados. Añádelo en todas las templates donde quieras que aparezca el buscador (home, categoría, producto, etc.):
 
 ```json
 {
