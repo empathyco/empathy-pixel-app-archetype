@@ -6,17 +6,17 @@
 
 ## Tabla de Contenidos
 
-- [Descripción General](#-descripción-general)
-- [Requisitos Previos](#-requisitos-previos)
-- [Instalación](#-instalación)
-- [Configuración](#-configuración)
-- [Arquitectura](#-arquitectura)
-- [Componentes Principales](#-componentes-principales)
-- [Flujo de Integración](#-flujo-de-integración)
-- [Configuración por Cliente](#-configuración-por-cliente)
-- [Evolutivos Propuestos](#-evolutivos-propuestos)
-- [Debugging](#-debugging)
-- [Contribución](#-contribución)
+- [Descripción General](#descripción-general)
+- [Requisitos Previos](#requisitos-previos)
+- [Instalación](#instalación)
+- [Configuración](#configuración)
+- [Arquitectura](#arquitectura)
+- [Componentes Principales](#componentes-principales)
+- [Flujo de Integración](#flujo-de-integración)
+- [Conceptos Clave](#conceptos-clave)
+- [Configuración por Cliente](#configuración-por-cliente)
+- [Debugging](#debugging)
+- [Contributors](#contributors)
 
 ---
 
@@ -68,7 +68,7 @@ Asegúrate de estar logueado en la cuenta objetivo:
    cd empathy-pixel-app-archetype
    ```
 
-2. Configura tu applicación siguiendo la guia de configuración detallada en la sección [Configuración](#-configuración).
+2. Configura tu aplicación siguiendo la guía de configuración detallada en la sección [Configuración](#configuración).
 
 3. Instala la aplicación: Instala la versión recién publicada en el workspace actual:
    ```bash
@@ -144,7 +144,7 @@ En tu theme, agrega los siguientes bloques para renderizar el cajón de búsqued
 }
 ```
 
-Puedes obtener más información sobre como se integra Empathy en la [documentación oficial de Empathy](https://docs.empathy.co/develop-empathy-platform/build-search-ui/web-archetype-integration-guide.html).
+> 📚 **Más información:** Puedes obtener más detalles sobre cómo se integra Empathy en la [documentación oficial de Empathy](https://docs.empathy.co/develop-empathy-platform/build-search-ui/web-archetype-integration-guide.html).
 
 ---
 
@@ -321,7 +321,8 @@ Esta es la **interfaz principal** para comunicarse con el widget de Empathy:
 - ✅ Muestra cantidades en el carrito
 - ✅ Marca productos con icono de wishlist "filled"
 
-Puedes obtener más información sobre la configuación del snippet en la [documentación oficial de Empathy](https://docs.empathy.co/develop-empathy-platform/build-search-ui/web-archetype-integration-guide.html#snippet-configuration).
+
+> 📚 **Más información:** Puedes obtener más información sobre la configuración del snippet en la [documentación oficial de Empathy](https://docs.empathy.co/develop-empathy-platform/build-search-ui/web-archetype-integration-guide.html#snippet-configuration).
 
 ### Eventos GA4
 
