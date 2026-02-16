@@ -1,0 +1,4 @@
+mutation RemoveFromList($shopperId: String!, $id: ID!, $name: String) {
+  removeFromList(id: $id, shopperId: $shopperId, name: $name)
+  @context(provider: "vtex.wish-list")
+}

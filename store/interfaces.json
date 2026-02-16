@@ -1,5 +1,11 @@
 {
   "pixel.APPNAME": {
     "component": "index"
+  },
+  "empathy-searchbar": {
+    "component": "EmpathySearchbar"
+  },
+  "empathy-results": {
+    "component": "EmpathyResults"
   }
 }
