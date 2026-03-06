@@ -77,14 +77,24 @@ Asegúrate de estar logueado en la cuenta objetivo:
    cd empathy-pixel-app-archetype
    ```
 
-2. Configura tu aplicación siguiendo la guía de configuración detallada en la sección [Configuración](#configuración).
+2. Configura tu aplicación: Sigue la guía de configuración detallada en la sección [Configuración](#configuración).
 
-3. Instala la aplicación: Instala la versión recién publicada en el workspace actual:
+3. Prueba la aplicación: En este punto puedes probar la aplicación localmente para asegurarte de que se carga correctamente en tu tienda VTEX.
+   ```bash
+   vtex link
+   ```
+
+4. Publica la aplicación: Publica la app en el registry de VTEX para que esté disponible en tu cuenta:
+   ```bash
+   vtex publish
+   ```
+
+5. Instala la aplicación: Instala la versión recién publicada en el workspace actual:
    ```bash
    vtex install
    ```
 
-4. Verifica la instalación:
+6. Verifica la instalación:
    ```bash
    vtex ls | grep <account-name>.empathy-pixel-app
    ```
