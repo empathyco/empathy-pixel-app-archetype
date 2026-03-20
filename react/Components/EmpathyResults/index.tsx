@@ -1,20 +1,15 @@
 import React from 'react'
 
-const EmpathyResults = () => {
+interface Props {
+    children?: React.ReactNode
+}
+
+const EmpathyResults: React.FC<Props> = ({ children }) => {
+
     return (
-        <div
-            id="empathy-results-container"
-            className="empathy-results-container"
-            data-teleport="empathy-results-container"
-            style={{
-                position: 'absolute',
-                top: '64px',
-                left: 0,
-                width: '100%',
-                zIndex: 999,
-                backgroundColor: 'white'
-            }}
-        ></div>
+        <div data-teleport="empathy-results-container" id="empathy-results-container">
+            {children}
+        </div>
     )
 }
 
