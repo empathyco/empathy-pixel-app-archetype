@@ -150,7 +150,39 @@ Ejemplo:
 
 ### 4. Agregar Componentes a la Store
 
-En tu theme, agrega los siguientes bloques para renderizar el cajón de búsqueda y los resultados. Añádelo en todas las templates donde quieras que aparezca el buscador (home, categoría, producto, etc.):
+En tu theme, agrega los bloques `empathy-searchbar` y `empathy-results` en **todas** las templates donde quieras que aparezca el cajón de búsqueda y el grid de resultados (home, categoría, producto, etc.).
+
+#### Configuración de EmpathyResults
+
+El componente `empathy-results` tiene un comportamiento especial que requiere una configuración específica.
+
+**¿Cómo funciona?**
+
+`empathy-results` renderiza un `div` con `data-teleport="empathy-results-container"`. Cuando el usuario realiza una búsqueda, el script de Empathy inyecta los resultados dentro de este contenedor y **automáticamente oculta todos sus elementos hermanos en el DOM**. Esto permite que el grid de resultados se incruste en el contenido de la página sin necesidad de CSS adicional.
+
+**Configuración requerida:**
+
+Para que este mecanismo funcione correctamente, **el contenido de la página que quieras ocultar durante la búsqueda debe estar declarado como children de `empathy-results`**, convirtiéndose así en hermanos de los resultados de búsqueda.
+
+> 💡 **Nota:** No es necesario incluir todo el contenido de la página. Elementos como partes del footer, chatbots, o componentes específicos que quieras mantener visibles durante la búsqueda pueden quedar fuera de los children de `empathy-results`.
+
+**Ejemplo de configuración en el home:**
+
+Antes de la integración:
+
+```json
+{
+  "store.home": {
+    "blocks": [
+      "flex-layout.row#hero",
+      "flex-layout.row#integrate",
+      "flex-layout.row#promises"
+    ]
+  }
+}
+```
+
+Después de la integración:
 
 ```json
 {
@@ -158,6 +190,13 @@ En tu theme, agrega los siguientes bloques para renderizar el cajón de búsqued
     "blocks": [
       "empathy-searchbar",
       "empathy-results"
+    ]
+  },
+  "empathy-results": {
+    "children": [
+      "flex-layout.row#hero",
+      "flex-layout.row#integrate",
+      "flex-layout.row#promises"
     ]
   }
 }
