@@ -6,6 +6,8 @@
     "component": "EmpathySearchbar"
   },
   "empathy-results": {
-    "component": "EmpathyResults"
+    "component": "EmpathyResults",
+    "composition": "children",
+    "allowed": "*"
   }
 }
