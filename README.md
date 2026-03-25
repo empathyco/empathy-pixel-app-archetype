@@ -148,9 +148,14 @@ Ejemplo:
 };
 ```
 
-### 4. Agregar Componentes a la Store
+### 4. Integración de los componentes
 
-En tu theme, agrega los bloques `empathy-searchbar` y `empathy-results` en **todas** las templates donde quieras que aparezca el cajón de búsqueda y el grid de resultados (home, categoría, producto, etc.).
+En tu theme, agrega los componentes `empathy-searchbar` y `empathy-results` en las templates donde necesites. Estos componentes pueden ubicarse **independientemente** en diferentes templates según la estructura de tu tienda.
+
+#### ¿Dónde colocar cada componente?
+
+- **`empathy-searchbar`**: En el header o donde necesites el cajón de búsqueda
+- **`empathy-results`**: En la template donde quieras mostrar los resultados (home, search, category, etc.)
 
 #### Configuración de EmpathyResults
 
@@ -166,10 +171,11 @@ Para que este mecanismo funcione correctamente, **el contenido de la página que
 
 > 💡 **Nota:** No es necesario incluir todo el contenido de la página. Elementos como partes del footer, chatbots, o componentes específicos que quieras mantener visibles durante la búsqueda pueden quedar fuera de los children de `empathy-results`.
 
-**Ejemplo de configuración en el home:**
+#### Ejemplos de Integración
 
-Antes de la integración:
+**Ejemplo A: Searchbar en header, Results en home**
 
+**Antes de la integración - Home:**
 ```json
 {
   "store.home": {
@@ -182,11 +188,80 @@ Antes de la integración:
 }
 ```
 
-Después de la integración:
-
+**Después de la integración - Home:**
 ```json
 {
   "store.home": {
+    "blocks": [
+      "empathy-results",
+      "flex-layout.row#promises"
+    ]
+  },
+  "empathy-results": {
+    "children": [
+      "flex-layout.row#hero",
+      "flex-layout.row#integrate"
+    ]
+  }
+}
+```
+
+> **💡** Aquí, `flex-layout.row#promises` queda fuera de los children de `empathy-results` porque no queremos que se oculte durante la búsqueda. Solo los elementos dentro de los children se ocultan automáticamente cuando aparecen los resultados.
+
+**Antes de la integración - Header:**
+```json
+{
+  "header": {
+    "blocks": [
+      "header-layout.desktop"
+    ]
+  },
+  "flex-layout.row#desktop": {
+    "children": [
+      "logo",
+      "minicart"
+    ]
+  }
+}
+```
+
+**Después de la integración - Header:**
+```json
+{
+  "header": {
+    "blocks": [
+      "header-layout.desktop"
+    ]
+  },
+  "flex-layout.row#desktop": {
+    "children": [
+      "logo",
+      "empathy-searchbar",
+      "minicart"
+    ]
+  }
+}
+```
+
+> **💡** Aquí, el cajón de búsqueda se integrará en una fila del header, entre el logo de la store y el carrito.
+
+**Ejemplo B: Ambos componentes en search page**
+
+**Antes de la integración:**
+```json
+{
+  "store.search": {
+    "blocks": [
+      "flex-layout.row#products"
+    ]
+  }
+}
+```
+
+**Después de la integración:**
+```json
+{
+  "store.search": {
     "blocks": [
       "empathy-searchbar",
       "empathy-results"
@@ -194,13 +269,15 @@ Después de la integración:
   },
   "empathy-results": {
     "children": [
-      "flex-layout.row#hero",
-      "flex-layout.row#integrate",
-      "flex-layout.row#promises"
+      "flex-layout.row#products"
     ]
   }
 }
 ```
+
+> **💡** En este ejemplo, tanto el cajón de búsqueda como los resultados están integrados consecutivamente. Todos los elementos originales del search page están dentro de los children de `empathy-results`, por lo que se ocultarán automáticamente cuando aparezcan los resultados de búsqueda.
+
+> **📌 Recuerda:** Puedes decidir dónde colocar cada componente según su estructura de templates. Por ejemplo: podrías usar `empathy-searchbar` sin `empathy-results` si solo necesitas el cajón de búsqueda, o usar solamente `empathy-results` manejando la query, filtros, etc. por los parámetros de la url.
 
 > 📚 **Más información:** Puedes obtener más detalles sobre cómo se integra Empathy en la [documentación oficial de Empathy](https://docs.empathy.co/develop-empathy-platform/build-search-ui/web-archetype-integration-guide.html).
 
