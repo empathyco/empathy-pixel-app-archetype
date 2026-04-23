@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { useOrderItems } from 'vtex.order-items/OrderItems';
 import { useOrderForm } from 'vtex.order-manager/OrderForm';
+import { ToastContext } from 'vtex.styleguide';
 import { handleCartOperation } from "./utils/handleCart";
 import { useEmpathyWishlist } from './hooks/handleWishlist';
 import { findProductBySkuId } from './utils';
@@ -12,14 +13,14 @@ const EmpathySearchbar = () => {
     useSessionListener();
     const { pushAddToCartEvent, pushRemoveFromCartEvent } = useGAAnalytics();
     const { addItems, updateQuantity, removeItem } = useOrderItems();
-    const {
-        orderForm: { items: cartItems },
-    } = useOrderForm();
+    const { orderForm, loading: orderFormLoading } = useOrderForm();
+    const { items: cartItems } = orderForm;
+    const { showToast } = useContext(ToastContext);
 
     const itemsRef = useRef(cartItems);
+    const initialSyncDone = useRef(false);
 
     const { handleWishlistOperation } = useEmpathyWishlist();
-
     const wishlistActionRef = useRef(handleWishlistOperation);
 
     useEffect(() => {
@@ -28,9 +29,19 @@ const EmpathySearchbar = () => {
 
     useEffect(() => {
         itemsRef.current = cartItems;
+
+        // After initial sync, keep Empathy's cart in sync with VTEX's confirmed state.
+        // This corrects optimistic updates that VTEX rejected (e.g. out-of-stock limits).
+        if (!initialSyncDone.current) return;
+
+        const whitelabel = (window as any).initX?.whitelabel;
+        const confirmedCart = (cartItems || []).reduce((acc: Record<string, number>, item: any) => {
+            if (item.id) acc[whitelabel ? `${item.id}-${whitelabel}` : String(item.id)] = item.quantity;
+            return acc;
+        }, {});
+
+        (window as any).InterfaceX?.setSnippetConfig({ cart: confirmedCart });
     }, [cartItems]);
-
-
 
     async function handleClickAction({
         sellerId, quantity, productSKU
@@ -54,8 +65,6 @@ const EmpathySearchbar = () => {
     }
 
     async function handleActionAddToCart({ action, skuId, quantity }: any) {
-        console.log("Processing AddToCart for SKU:", skuId, "Action:", action);
-
         const productData: any = await findProductBySkuId(skuId);
         const product = productData && productData.length > 0 ? productData[0] : null;
 
@@ -86,10 +95,11 @@ const EmpathySearchbar = () => {
         }
     }
 
+    // Declared before the sync useEffect so window.initX is set when the sync reads window.initX.whitelabel
     useEffect(() => {
         /**
          * Asegurate de ajustar la configuración de `initX` según las necesidades de tu tienda.
-         * 
+         *
          * Más información en https://github.com/empathyco/empathy-pixel-app-archetype?#3-configuraci%C3%B3n-initx
          */
         (window as any).initX = {
@@ -97,6 +107,7 @@ const EmpathySearchbar = () => {
             lang: "es",
             scope: "desktop",
             currency: "EUR",
+            whitelabel: "empathymxwl1",
             consent: true,
             viewMode: 'embedded',
             callbacks: {
@@ -107,7 +118,8 @@ const EmpathySearchbar = () => {
                         metadata: metadata || {},
                         cart,
                         actionType: 'add',
-                        handleActionAddToCart
+                        handleActionAddToCart,
+                        showToast,
                     });
                 },
                 UserClickedResultVariantAddToCart: function (result: any, metadata: any) {
@@ -117,7 +129,8 @@ const EmpathySearchbar = () => {
                         metadata: metadata || {},
                         cart,
                         actionType: 'add',
-                        handleActionAddToCart
+                        handleActionAddToCart,
+                        showToast,
                     });
                 },
                 UserClickedResultRemoveFromCart: function (result: any, metadata: any) {
@@ -127,7 +140,8 @@ const EmpathySearchbar = () => {
                         metadata: metadata || {},
                         cart,
                         actionType: 'remove',
-                        handleActionAddToCart
+                        handleActionAddToCart,
+                        showToast,
                     });
                 },
                 UserClickedResultVariantRemoveFromCart: function (result: any, metadata: any) {
@@ -137,7 +151,8 @@ const EmpathySearchbar = () => {
                         metadata: metadata || {},
                         cart,
                         actionType: 'remove',
-                        handleActionAddToCart
+                        handleActionAddToCart,
+                        showToast,
                     });
                 },
                 UserClickedResultWishlist: function (result: any) {
@@ -151,6 +166,23 @@ const EmpathySearchbar = () => {
         (window as any).InterfaceX?.init();
 
     }, []);
+
+    // Sync pre-existing cart to Empathy once on mount, after orderForm is ready
+    useEffect(() => {
+        if (orderFormLoading || initialSyncDone.current) return;
+        initialSyncDone.current = true;
+
+        const items = orderForm.items || [];
+        if (items.length === 0) return;
+
+        const whitelabel = (window as any).initX?.whitelabel;
+        const initialCart = items.reduce((acc: Record<string, number>, item: any) => {
+            if (item.id) acc[whitelabel ? `${item.id}-${whitelabel}` : String(item.id)] = item.quantity;
+            return acc;
+        }, {});
+
+        (window as any).InterfaceX?.setSnippetConfig({ cart: initialCart });
+    }, [orderFormLoading]);
 
     return (
         <div id="empathy-searchbar">

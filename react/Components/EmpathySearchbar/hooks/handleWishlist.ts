@@ -111,10 +111,15 @@ export const useEmpathyWishlist = () => {
 
             if (!isAuthenticated) {
                 if (isMounted.current) {
-                    showToast({ message: 'Inicia sesión para usar favoritos' });
                     sessionStorage.setItem(ADD_AFTER_LOGIN_KEY, productId);
                     const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
-                    window.location.assign(`/login?returnUrl=${returnUrl}`);
+                    showToast({
+                        message: 'Inicia sesión para agregar a favoritos',
+                        action: {
+                            label: 'Iniciar sesión',
+                            onClick: () => window.location.assign(`/login?returnUrl=${returnUrl}`),
+                        },
+                    });
                 }
                 return;
             }

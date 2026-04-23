@@ -1,17 +1,20 @@
 import { ACTIONS } from '../constants';
+import { getCartToastMessage } from './cartToastMessages';
 
 export async function handleCartOperation({
     result,
     metadata,
     cart,
     actionType,
-    handleActionAddToCart
+    handleActionAddToCart,
+    showToast,
 }: {
     result: any;
     metadata: any;
     cart: any;
     actionType: 'add' | 'remove';
-    handleActionAddToCart: (params: any) => void;
+    handleActionAddToCart: (params: any) => Promise<void> | void;
+    showToast?: (params: { message: string; duration?: number }) => void;
 }) {
     if (!result || !result.id) return;
 
@@ -45,5 +48,15 @@ export async function handleCartOperation({
         cart: { ...cart },
     });
 
-    handleActionAddToCart({ skuId: cleanId, quantity, action });
+    try {
+        await handleActionAddToCart({ skuId: cleanId, quantity, action });
+        if (showToast) {
+            showToast(getCartToastMessage(actionType === 'add' ? 'addSuccess' : 'removeSuccess'));
+        }
+    } catch (error) {
+        console.error('Cart operation error:', error);
+        if (showToast) {
+            showToast(getCartToastMessage(actionType === 'add' ? 'addError' : 'removeError'));
+        }
+    }
 }
