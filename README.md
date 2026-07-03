@@ -46,7 +46,6 @@ Esta app es una **solución template configurable** que permite integrar el busc
 1. El **conector backend** de Empathy esté correctamente configurado
 2. El **catálogo de VTEX** se esté enviando como feed a Empathy
 3. El equipo de **Empathy haya mapeado el feed** correctamente
-4. Tengas acceso al **script de Empathy** de cada cliente (`app.js`) provisto por el equipo de Empathy
 
 ---
 
@@ -118,20 +117,8 @@ Configura el Vendor (Account Name): Abre el archivo manifest.json en la raíz de
 
 Nota: Esto cambiará el ID de la app a TU_ACCOUNT_NAME.empathy-pixel-app.
 
-### 2. Script de Empathy
 
-Actualiza el archivo `pixel/head.html` con la URL del script de Empathy proporcionada por el equipo:
-
-```html
-<script src="https://x.empathy.co/x-{INSTANCE}/app.js" type="module"></script>
-```
-
-Ejemplo:
-```html
-<script src="https://x.empathy.co/x-chedraui/app.js" type="module"></script>
-```
-
-### 3. Configuración InitX
+### 2. Configuración InitX
 
 En `react/Components/EmpathySearchbar/index.tsx`, configura los parámetros del cliente:
 
@@ -148,7 +135,7 @@ Ejemplo:
 };
 ```
 
-### 4. Integración de los componentes
+### 3. Integración de los componentes
 
 En tu theme, agrega los componentes `empathy-searchbar` y `empathy-results` en las templates donde necesites. Estos componentes pueden ubicarse **independientemente** en diferentes templates según la estructura de tu tienda.
 
@@ -478,7 +465,6 @@ Todos incluyen:
 ### Checklist de Implementación
 
 #### Script de Empathy
-- [ ] Cambiar URL en `pixel/head.html` según entorno del cliente
 - [ ] Verificar que el script se cargue correctamente (`console.log(window.InterfaceX)`)
 
 #### InitX Configuration
