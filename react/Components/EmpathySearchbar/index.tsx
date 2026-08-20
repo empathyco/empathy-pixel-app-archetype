@@ -105,8 +105,9 @@ const EmpathySearchbar = () => {
         (window as any).initX = {
             instance: "empathy",
             lang: "es",
+            uiLang: "es-MX", // Language of the UI in BCP 47 format
             scope: "desktop",
-            currency: "EUR",
+            currency: "MXN",
             whitelabel: "empathymxwl1",
             consent: true,
             viewMode: 'embedded',
